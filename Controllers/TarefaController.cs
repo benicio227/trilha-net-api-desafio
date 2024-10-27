@@ -44,7 +44,14 @@ namespace TrilhaApiDesafio.Controllers
         {
             // TODO: Buscar  as tarefas no banco utilizando o EF, que contenha o titulo recebido por parâmetro
             // Dica: Usar como exemplo o endpoint ObterPorData
-            return Ok();
+            var tarefas = _context.Tarefas.Where(t => t.Titulo.Contains(titulo)).ToList();
+
+            if(!tarefas.Any())
+            {
+                return NotFound(new {Mensagem = "Nenhuma tarefa encontrada com o título fornecido"});
+            }
+
+            return Ok(tarefas);
         }
 
         [HttpGet("ObterPorData")]
